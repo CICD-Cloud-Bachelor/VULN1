@@ -1,0 +1,25 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: BuildAndTest
+  displayName: 'Build and Test C Program'
+  steps:
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y gcc
+    displayName: 'Install Dependencies'
+
+  - script: |
+      gcc -o math_operations math_operations.c
+      if ./math_operations; then
+        echo "Tests passed successfully."
+      else
+        echo "Tests failed."
+        exit 1
+      fi
+    displayName: 'Compile and Run Tests'
+
